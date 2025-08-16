@@ -1,0 +1,6 @@
+#Build forders
+bin/
+obj/
+
+#Visual studio folders
+.vs/
