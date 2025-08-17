@@ -9,6 +9,7 @@ namespace MailPullerApp
 {
     internal class AppConfig
     {
+        //Kazda vlastnost reprezentuje jeden objekt v appsettings.json
         public GraphSettings Graph { get; set; } = default!;
         public MailboxSettings Mailbox { get; set; } = default!;
         public OutputSettings Output { get; set; } = default!;
