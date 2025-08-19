@@ -10,6 +10,8 @@ namespace MailPullerApp.Auth
     internal class MsalTokenProvider : ITokenProvider
     {
         private readonly IConfidentialClientApplication app;
+
+        // Konstruktor poskládá adresu autority (přihlašovacího serveru) a postaví MSAL klienta pro „app-only“ přihlášení
         public MsalTokenProvider(AppConfig config)
         {
             if (config == null)
@@ -38,6 +40,7 @@ namespace MailPullerApp.Auth
                 throw new ArgumentException("AutorityHost is not set in the Graph settings.");
             }
 
+            // Sestavení URL autority (přihlašovacího serveru) z hostitele a ID tenanta
             var authority = graphSettings.AuthorityHost.TrimEnd('/') + "/" + graphSettings.TenantId;
             app = ConfidentialClientApplicationBuilder.Create(graphSettings.ClientId)
                 .WithClientSecret(graphSettings.ClientSecret)
