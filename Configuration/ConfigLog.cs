@@ -32,6 +32,10 @@ namespace MailPullerApp.Configuration
             var repo = LogManager.GetRepository(Assembly.GetEntryAssembly()!);
             XmlConfigurator.Configure(repo, new FileInfo(path));
 
+            // Zapiseme do konzole, ze log4net je nakonfigurovano
+            Console.WriteLine($"[LOG4NET] Using config: {path}");
+            Console.WriteLine($"[LOG4NET] Exists: {File.Exists(path)}");
+
             IsCongigured = true; // Nastavime, ze log4net je nakonfigurovan
         }
 
