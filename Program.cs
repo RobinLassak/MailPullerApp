@@ -4,6 +4,7 @@ using MailPullerApp.Auth;
 using MailPullerApp.Configuration;
 using System.IO;
 using System.Reflection;
+using MailPullerApp.Services.Storage;
 
 namespace MailPullerApp
 {
@@ -39,6 +40,14 @@ namespace MailPullerApp
             Console.WriteLine($"UseDelta:          {g.UseDelta}");
             Console.WriteLine($"Select:            {g.Select}");
             Console.WriteLine($"ClientSecret set:  {!string.IsNullOrWhiteSpace(g.ClientSecret)} (len={g.ClientSecret?.Length ?? 0})");
+            Console.WriteLine("=======================================================");
+
+            var store = new FileSystemEmailStore(config);
+
+            log.Info("FileSystemEmailStore vytvořen.");
+            Console.WriteLine($"RootDirectory: {store.RootDirectory}");
+            Console.WriteLine($"SaveMimeEml: {store.SaveMimeEml}");
+            Console.WriteLine($"SaveAttachmentsWithMimeKit: {store.SaveAttachmentsWithMimeKit}");
             Console.WriteLine("=======================================================");
 
             try
