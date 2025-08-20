@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MailPullerApp.Services.Storage
 {
     // Třída pro metadata e-mailu, která může obsahovat informace jako odesílatel, příjemce, předmět atd.
-    internal class EmailMetadata
+    public class EmailMetadata
     {
         public string Subject { get; init; } = string.Empty;
         public DateTime ReceivedDateUtc { get; init; }
