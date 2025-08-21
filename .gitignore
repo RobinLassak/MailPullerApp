@@ -1,6 +1,35 @@
-#Build forders
+#Build folders
 bin/
 obj/
 
 #Visual studio folders
 .vs/
+
+#Logs
+logs/
+*.log
+
+#State files
+state.json
+
+#Downloaded emails
+MailDownload/
+
+#Environment variables
+.env
+
+#User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+#NuGet
+*.nupkg
+*.snupkg
+packages/
+
+#Test results
+TestResults/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
