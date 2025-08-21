@@ -6,8 +6,8 @@ using MailPullerApp.Services.Storage;
 using MimeKit;
 using System.IO;
 using System.Text;
-using System.Threading;         
-using System.Threading.Tasks;   
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MailPullerApp
 {
@@ -60,7 +60,7 @@ namespace MailPullerApp
             Console.WriteLine("=======================================================");
             Console.WriteLine("TESTING GRAPH COMPONENTS (bez připojení k API)");
             Console.WriteLine("=======================================================");
-            
+
             await TestGraphComponentsWithoutApi(config, store, log);
 
             Console.WriteLine("=======================================================");
@@ -71,7 +71,7 @@ namespace MailPullerApp
             {
                 // Test autentizace
                 var tokenProvider = new MsalTokenProvider(config);
-                var token = await tokenProvider.GetAppTokenAsync(scopes, CancellationToken.None);  
+                var token = await tokenProvider.GetAppTokenAsync(scopes, CancellationToken.None);
 
                 var preview = token.Length >= 15 ? token.Substring(0, 15) + "..." : token;
                 log.Info($"Token získán (len={token.Length}, preview={preview})");
@@ -79,10 +79,10 @@ namespace MailPullerApp
 
                 // Vytvoření a spuštění služby pro stahování e-mailů
                 using var downloadService = new EmailDownloadService(tokenProvider, store, config);
-                
+
                 Console.WriteLine("Spouštím stahování e-mailů...");
                 var downloadedCount = await downloadService.DownloadEmailsAsync(CancellationToken.None);
-                
+
                 Console.WriteLine($"Stahování dokončeno. Staženo {downloadedCount} nových e-mailů.");
 
                 // Zobrazení statistik
@@ -144,7 +144,7 @@ namespace MailPullerApp
             }
         }
 
-        private static async Task TestDtoClasses()
+        private static Task TestDtoClasses()
         {
             // Test GraphMessageDTO
             var messageDto = new MailPullerApp.Services.Graph.DTO.GraphMessageDTO
@@ -170,9 +170,11 @@ namespace MailPullerApp
             Console.WriteLine($"   - GraphMessageDTO: ID={messageDto.Id}, Subject={messageDto.Subject}");
             Console.WriteLine($"   - GraphMailItemDTO: ID={mailItemDto.Id}, FromName={mailItemDto.FromName}");
             Console.WriteLine($"   - Konverze DTO: ✅ OK");
+            
+            return Task.CompletedTask;
         }
 
-        private static async Task TestODataList()
+        private static Task TestODataList()
         {
             var odataList = new MailPullerApp.Services.Graph.Internal.ODataList<MailPullerApp.Services.Graph.DTO.GraphMailItemDTO>
             {
@@ -190,60 +192,66 @@ namespace MailPullerApp
             Console.WriteLine($"   - NextLink: {odataList.GetNextPageUrl()}");
             Console.WriteLine($"   - DeltaLink: {odataList.GetDeltaLink()}");
             Console.WriteLine($"   - ODataList: OK");
+            
+            return Task.CompletedTask;
         }
 
-        private static async Task TestSyncState()
+        private static Task TestSyncState()
         {
             var syncState = new MailPullerApp.Services.Graph.Internal.SyncState();
-            
+
             // Test označení zprávy jako zpracované
             syncState.MarkMessageAsProcessed("test-id", DateTimeOffset.UtcNow);
-            
+
             Console.WriteLine($"   - SyncState: TotalProcessed={syncState.TotalMessagesProcessed}");
             Console.WriteLine($"   - IsMessageProcessed: {syncState.IsMessageProcessed("test-id")}");
             Console.WriteLine($"   - IsMessageProcessed (neexistující): {syncState.IsMessageProcessed("non-existent")}");
-            
+
             // Test čištění starých záznamů
             syncState.CleanupOldRecords(1);
-            
+
             Console.WriteLine($"   - SyncState: OK");
+            
+            return Task.CompletedTask;
         }
 
         private static void TestGraphApiHelper()
         {
             var helper = typeof(MailPullerApp.Services.Graph.Internal.GraphApiHelper);
-            
+
             Console.WriteLine($"   - GraphApiHelper: OK (třída existuje)");
             Console.WriteLine($"   - GraphBaseUrl: {MailPullerApp.Services.Graph.Internal.GraphApiHelper.GraphBaseUrl}");
             Console.WriteLine($"   - DefaultScope: {MailPullerApp.Services.Graph.Internal.GraphApiHelper.DefaultScope}");
-            
+
             // Test validace
             var isValidFolder = MailPullerApp.Services.Graph.Internal.GraphApiHelper.Folders.Inbox;
             var isValidEmail = MailPullerApp.Services.Graph.Internal.GraphApiHelper.IsValidEmailAddress("test@example.com");
-            
+
             Console.WriteLine($"   - Folder validation: {isValidFolder}");
             Console.WriteLine($"   - Email validation: {isValidEmail}");
         }
 
-        private static async Task TestEmailDownloadServiceWithMockData(AppConfig config, FileSystemEmailStore store, ILog log)
+        private static Task TestEmailDownloadServiceWithMockData(AppConfig config, FileSystemEmailStore store, ILog log)
         {
             // Vytvoření mock token provideru
             var mockTokenProvider = new MockTokenProvider();
-            
+
             // Vytvoření EmailDownloadService
             using var downloadService = new MailPullerApp.Services.Graph.EmailDownloadService(mockTokenProvider, store, config);
-            
+
             Console.WriteLine($"   - EmailDownloadService vytvořen");
-            
+
             // Test statistik
             var (totalProcessed, lastSync, lastDeltaLink) = downloadService.GetSyncStats();
             Console.WriteLine($"   - Initial stats: TotalProcessed={totalProcessed}, LastSync={lastSync}");
-            
+
             // Test čištění starých záznamů
             downloadService.CleanupOldRecords(30);
             Console.WriteLine($"   - CleanupOldRecords: OK");
-            
+
             Console.WriteLine($"   - EmailDownloadService: OK");
+            
+            return Task.CompletedTask;
         }
 
         /// <summary>
