@@ -12,9 +12,6 @@ logs/
 #State files
 state.json
 
-#Downloaded emails
-MailDownload/
-
 #Environment variables
 .env
 
