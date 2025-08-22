@@ -179,4 +179,4 @@ MailPullerApp/
 
 ## Licence
 
-Tento projekt je vytvořen jako testovací úkol pro Allium.
+Tento projekt je vytvořen jako testovací úkol pro Allium. Autor Robin Lassak.
