@@ -4,13 +4,13 @@ Aplikace pro stahování e-mailů z Microsoft Graph API a jejich ukládání do 
 
 ## Funkce
 
-- ✅ Stahování e-mailů z Microsoft Graph API
-- ✅ Ukládání e-mailů do strukturovaných složek
-- ✅ Extrakce a ukládání příloh
-- ✅ Delta synchronizace pro efektivní stahování
-- ✅ Logování pomocí log4net
-- ✅ Konfigurace přes appsettings.json
-- ✅ Správa stavu synchronizace mezi běhy
+- Stahování e-mailů z Microsoft Graph API
+- Ukládání e-mailů do strukturovaných složek
+- Extrakce a ukládání příloh
+- Delta synchronizace pro efektivní stahování
+- Logování pomocí log4net
+- Konfigurace přes appsettings.json
+- Správa stavu synchronizace mezi běhy
 
 ## Konfigurace
 
