@@ -30,3 +30,6 @@ packages/
 TestResults/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+
+ #Input data
+ appsettings.json
